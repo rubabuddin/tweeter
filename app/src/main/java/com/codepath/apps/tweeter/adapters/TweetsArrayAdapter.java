@@ -18,13 +18,14 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static android.media.CamcorderProfile.get;
 import static com.raizlabs.android.dbflow.config.FlowManager.getContext;
 
 /**
  * Created by rubab.uddin on 10/27/2016.
  */
 //Takes tweet object, turns it into a view to be displayed in the list
-public class TweetsArrayAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.ViewHolder>{
 
     private List<Tweet> tweets;
     private Context context;
@@ -34,22 +35,25 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         this.context = context;
     }
 
+    private Context getContext() {
+        return context;
+    }
+
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder;
-        //get Tweet
-        Tweet tweet = getItem(position);
-        //inflate the template
-        if(convertView == null){
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_tweet, parent, false);
-            viewHolder = new ViewHolder(convertView);
-            convertView.setTag(viewHolder);
-        } else {
-            viewHolder = (ViewHolder) convertView.getTag();
-        }
+    public TweetsArrayAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Context context = parent.getContext();
+
+        View view = LayoutInflater.from(context).inflate(R.layout.item_tweet, parent, false);
+
+        ViewHolder viewHolder = new ViewHolder(view);
+        return viewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(TweetsArrayAdapter.ViewHolder viewHolder, int position) {
+        Tweet tweet = tweets.get(position);
 
         Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/HelveticaNeue-Regular.ttf");
-
 
         //find subviews to fill with data in the template
         viewHolder.tvUserName.setText(tweet.getUser().getUserName());
@@ -70,12 +74,8 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 .fitCenter()
                 .into(viewHolder.ivProfile);
 
-        //populate data into the subviews
-        //return the view to be inserted into the list
-        return convertView;
-    }
 
-    private void configureViewHolderFull(final RecyclerView.ViewHolder viewHolder, int position) {
+    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.ivProfile)
@@ -94,7 +94,16 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         TextView tvFavorite;
 
         public ViewHolder(View view) {
+            super(view);
             ButterKnife.bind(this, view);
         }
+    }
+
+    @Override
+    public int getItemCount() {
+        if (tweets != null) {
+            return tweets.size();
+        }
+        return 0;
     }
 }

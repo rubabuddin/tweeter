@@ -2,8 +2,9 @@ package com.codepath.apps.tweeter;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.ListView;
 
 import com.codepath.apps.tweeter.adapters.TweetsArrayAdapter;
 import com.codepath.apps.tweeter.models.Tweet;
@@ -13,6 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -20,19 +22,22 @@ public class TimelineActivity extends AppCompatActivity {
 
     private TwitterClient client;
     private TweetsArrayAdapter aTweets;
-    private ArrayList<Tweet> tweets;
-    private ListView lvTweets;
+    private List<Tweet> tweets = new ArrayList<Tweet>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
 
-        lvTweets = (ListView) findViewById(R.id.lvTweets);
-        tweets = new ArrayList<>();
-        aTweets = new TweetsArrayAdapter(this, tweets);
-        lvTweets.setAdapter(aTweets);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        // Make sure the toolbar exists in the activity and is not null
+        //setSupportActionBar(toolbar);
 
+        RecyclerView rvTweets = (RecyclerView) findViewById(R.id.rvTweets);
+        aTweets = new TweetsArrayAdapter(this, tweets);
+        rvTweets.setAdapter(aTweets);
+        rvTweets.setLayoutManager(new LinearLayoutManager(this));
         client = TwitterApplication.getRestClient(); //used for all endpoints across the app
         populateTimeline();
     }
@@ -49,7 +54,7 @@ public class TimelineActivity extends AppCompatActivity {
                //Create models and add them to the adapter
 
                //Load the model into listview
-               aTweets.addAll(Tweet.fromJSONArray(json));
+               tweets.addAll(Tweet.fromJSONArray(json));
            }
 
             @Override
