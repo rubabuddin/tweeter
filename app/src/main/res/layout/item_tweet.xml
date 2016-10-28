@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="8dp">
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/ivProfile"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        tools:src="@drawable/ic_launcher"
+        android:layout_marginRight="5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="\@kdtrey5"
+        android:id="@+id/tvUserName"
+        android:layout_marginLeft="4dp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/tvProfileName"
+        android:layout_toEndOf="@+id/tvProfileName"
+        android:textSize="14sp"
+        android:textColor="@color/colorAccent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Made my decision to become a Golden State Warrior. Thx for the memories OKC #DubNation"
+        android:id="@+id/tvBody"
+        android:layout_below="@+id/tvProfileName"
+        android:layout_toRightOf="@+id/ivProfile"
+        android:layout_alignRight="@+id/tvTime"
+        android:layout_alignEnd="@+id/tvTime"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="1dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1d"
+        android:id="@+id/tvTime"
+        android:layout_alignTop="@+id/tvUserName"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textSize="14sp"
+        android:textColor="@color/colorAccent" />
+
+    <ImageView
+        android:id="@+id/ivReply"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_below="@+id/tvBody"
+        android:src="@drawable/twitter_reply"
+        android:layout_alignLeft="@id/tvBody"
+        android:tint="@color/colorAccent"/>
+
+    <ImageView
+        android:id="@+id/ivRetweet"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_below="@+id/tvBody"
+        android:layout_marginLeft="75dp"
+        android:layout_alignLeft="@id/ivReply"
+        android:src="@drawable/twitter_retweet"
+        android:tint="@color/colorAccent"/>
+
+    <TextView
+        android:id="@+id/tvRetweet"
+        android:layout_marginLeft="2dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/ivRetweet"
+        tools:text="1,230"
+        android:textSize="14sp"
+        android:layout_below="@+id/tvBody"
+        android:textColor="@color/colorAccent" />
+
+    <ImageView
+        android:id="@+id/ivFavorite"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginLeft="75dp"
+        android:layout_alignLeft="@id/tvRetweet"
+        android:src="@drawable/twitter_favorite"
+        android:layout_below="@+id/tvBody"
+        android:tint="@color/colorAccent"/>
+
+    <TextView
+        android:id="@+id/tvFavorite"
+        android:layout_marginLeft="2dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/ivFavorite"
+        tools:text="5,056"
+        android:textSize="14sp"
+        android:layout_below="@+id/tvBody"
+        android:textColor="@color/colorAccent" />
+
+    <ImageView
+        android:id="@+id/ivMessage"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginLeft="75dp"
+        android:layout_alignLeft="@id/tvFavorite"
+        android:src="@drawable/twitter_message"
+        android:layout_below="@+id/tvBody"
+        android:tint="@color/colorAccent"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kevin Durant"
+        android:id="@+id/tvProfileName"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/ivProfile"
+        android:layout_toEndOf="@+id/ivProfile"
+        android:textColor="@color/colorPrimary" />
+
+</RelativeLayout>
