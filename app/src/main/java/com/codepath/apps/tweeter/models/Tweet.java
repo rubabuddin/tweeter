@@ -55,7 +55,7 @@ public class Tweet {
             tweet.createdAt = jsonObject.getString("created_at");
             tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
             tweet.retweetCount = jsonObject.getLong("retweet_count");
-            tweet.favoriteCount = jsonObject.getLong("retweet_count"); //where is the favourites count????
+            tweet.favoriteCount = jsonObject.getLong("favorite_count"); //where is the favourites count????
         } catch (JSONException e) {
             e.printStackTrace();
         }

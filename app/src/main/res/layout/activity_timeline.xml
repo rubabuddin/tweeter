@@ -8,21 +8,14 @@
     android:fitsSystemWindows="true"
     tools:context="com.codepath.apps.tweeter.TimelineActivity">
 
-    <!--
-        <android.support.design.widget.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/AppTheme"
-            android:id="@+id/appBar"
-            android:layout_marginBottom="2dp">
-
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
+                android:minHeight="?attr/actionBarSize"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:background="@color/twitterColor">
 
                 <ImageView
-                    android:paddingLeft="25dp"
                     android:layout_width="wrap_content"
                     android:id="@+id/ivToolbar"
                     android:layout_height="37dp"
@@ -31,18 +24,17 @@
                     android:src="@drawable/logo_twitter"
                     android:layout_gravity="center_horizontal"/>
             </android.support.v7.widget.Toolbar>
-        </android.support.design.widget.AppBarLayout>
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:id="@+id/lvTweets" />
-    !-->
+    <!--        <ListView
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_alignParentTop="true"
+              android:layout_alignParentLeft="true"
+              android:layout_alignParentStart="true"
+              android:layout_alignParentBottom="true"
+              android:layout_alignParentRight="true"
+              android:layout_alignParentEnd="true"
+              android:id="@+id/lvTweets" />
+      !-->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvTweets"
         android:layout_marginTop="0dp"
@@ -51,7 +43,9 @@
         android:scrollbars="vertical"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"/>
+        android:layout_below="@+id/toolbar">
+        </android.support.v7.widget.RecyclerView>
+
 
 </RelativeLayout>
 
