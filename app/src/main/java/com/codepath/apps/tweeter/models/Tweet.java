@@ -10,6 +10,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by rubab.uddin on 10/25/2016.
@@ -24,7 +26,18 @@ public class Tweet {
     private long retweetCount;
     private long favoriteCount;
 
-    public String getTimeAgo() { return getRelativeTimeAgo(getCreatedAt()); }
+    public String getTimeAgo() {
+        String timeAgo = getRelativeTimeAgo(getCreatedAt());
+        String regex = "^(\\d+)\\s(\\S).*";
+
+        final Pattern pattern = Pattern.compile(regex);
+        final Matcher matcher = pattern.matcher(timeAgo);
+
+        while (matcher.find()) {
+            timeAgo = matcher.group(1) + matcher.group(2);
+        }
+        return timeAgo;
+    }
 
     public long getRetweetCount() { return retweetCount; }
 

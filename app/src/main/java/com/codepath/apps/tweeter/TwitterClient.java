@@ -42,16 +42,47 @@ public class TwitterClient extends OAuthBaseClient {
 		client.get(apiUrl, params, handler);
 	}
 
-	public void getHomeTimeline(AsyncHttpResponseHandler handler){
+	public void getHomeTimeline(long maxId, AsyncHttpResponseHandler handler){
 		String apiUrl = getApiUrl("statuses/home_timeline.json");
 		RequestParams params = new RequestParams();
 		params.put("count", 25);
-		params.put("since_id", 1);
-		//Execute the request
+		if (maxId != -1) {
+			params.put("max_id", maxId);
+		} else {
+			params.put("since_id", 1);
+		}
 		getClient().get(apiUrl, params, handler);
 	}
 
 	//compose tweet
+	//POST statuses/update.json
+	public void postStatus(String status, long replyStatusId, AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/update.json");
+		RequestParams params = new RequestParams();
+		params.put("status", status);
+
+		//for tweet detail view, add reply to feature
+		if (replyStatusId != -1) {
+			params.put("in_reply_to_status_id", replyStatusId);
+		}
+		getClient().post(apiUrl, params, handler);
+	}
+
+	//favorite tweet
+	// POST favorites/create.json
+	public void markFavorite(long tweetId, AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("favorites/create.json");
+		RequestParams params = new RequestParams();
+		params.put("id", tweetId);
+		getClient().post(apiUrl, params, handler);
+	}
+
+	// GET account/verify_credentials.json
+	// request personal credentials
+	public void getUser(AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("account/verify_credentials.json");
+		getClient().get(apiUrl, handler);
+	}
 
 	/* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint
 	 * 	  i.e getApiUrl("statuses/home_timeline.json");

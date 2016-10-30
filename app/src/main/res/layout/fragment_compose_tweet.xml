@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/ivProfile"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dp"
+        tools:src="@drawable/ic_launcher"/>
+
+    <EditText
+        android:id="@+id/etTweetBody"
+        android:background="@android:color/transparent"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/btnClose"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="10dp"
+        android:hint="@string/hint_compose_tweet"
+        tools:hint="@string/hint_compose_tweet"
+        android:fontFamily="s"/>
+
+    <ImageView
+        android:id="@+id/map_marker"
+        android:layout_width="@dimen/profile_image_size"
+        android:layout_height="@dimen/profile_image_size"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/etTweetBody"
+        android:src="@drawable/ic_map_marker"
+        android:tint="@color/colorAccent"/>
+
+    <TextView
+        android:id="@+id/tvLocation"
+        android:layout_below="@id/etTweetBody"
+        android:layout_alignBottom="@id/map_marker"
+        android:layout_toRightOf="@id/map_marker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="San Jose, CA"
+        android:textColor="@color/textColor"/>
+    <Button
+        android:id="@+id/btnTweet"
+        android:background="@drawable/tweet_button"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tweet"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:enabled="false" />
+
+    <View
+        android:id="@+id/horizontal_line"
+        android:layout_width="fill_parent"
+        android:layout_above="@id/btnTweet"
+        android:layout_height="0.25dp"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:background="@android:color/darker_gray"/>
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/tvCharsLeft"
+        android:layout_alignBaseline="@+id/btnTweet"
+        android:layout_alignBottom="@+id/btnTweet"
+        android:layout_marginRight="10dp"
+        android:textSize="@dimen/secondaryText"
+        android:layout_toLeftOf="@+id/btnTweet"
+        android:layout_toStartOf="@+id/btnTweet"
+        tools:text="140"
+        android:textColor="@color/textColor"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColor"
+        android:id="@+id/tvUser"
+        tools:text="\@RubabUddin"
+        android:layout_above="@+id/etTweetBody"
+        android:layout_toLeftOf="@id/ivProfile" />
+
+    <ImageButton
+        android:id="@+id/btnClose"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@drawable/ic_close"
+        android:tint="@color/twitterColor"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+</RelativeLayout>

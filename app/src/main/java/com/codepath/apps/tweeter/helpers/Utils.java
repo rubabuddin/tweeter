@@ -22,5 +22,19 @@ public class Utils {
         return false;
     }
 
+    /*public String getCity(Context context){
+        LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        double longitude = location.getLongitude();
+        double latitude = location.getLatitude();
 
+
+        Geocoder gcd = new Geocoder(context, Locale.getDefault());
+        List<Address> addresses = gcd.getFromLocation(latitude, longitude, 1);
+        if (addresses.size() > 0)
+            System.out.println(addresses.get(0).getLocality());
+        return addresses.get(0).getLocality();
+    }
+
+*/
 }

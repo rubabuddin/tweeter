@@ -2,18 +2,22 @@ package com.codepath.apps.tweeter.models;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 /**
  * Created by rubab.uddin on 10/25/2016.
  */
-
+@Parcel
 public class User {
     //list attributes
-    private String profileName;
-    private String userName;
-    private long uid;
-    private String profileImageUrl;
+    String profileName;
+    String userName;
+    long uid;
+    String profileImageUrl;
 
+    // empty constructor needed by the Parceler library
+    public User() {
+    }
 
     public long getUid() {
         return uid;

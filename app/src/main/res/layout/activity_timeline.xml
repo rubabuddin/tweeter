@@ -8,33 +8,24 @@
     android:fitsSystemWindows="true"
     tools:context="com.codepath.apps.tweeter.TimelineActivity">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:minHeight="?attr/actionBarSize"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/twitterColor">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/twitterColor">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:id="@+id/ivToolbar"
-                    android:layout_height="37dp"
-                    android:adjustViewBounds="true"
-                    android:layout_alignParentLeft="true"
-                    android:src="@drawable/logo_twitter"
-                    android:layout_gravity="center_horizontal"/>
-            </android.support.v7.widget.Toolbar>
-    <!--        <ListView
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_alignParentTop="true"
-              android:layout_alignParentLeft="true"
-              android:layout_alignParentStart="true"
-              android:layout_alignParentBottom="true"
-              android:layout_alignParentRight="true"
-              android:layout_alignParentEnd="true"
-              android:id="@+id/lvTweets" />
-      !-->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:id="@+id/ivToolbar"
+            android:layout_height="37dp"
+            android:adjustViewBounds="true"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/logo_twitter"
+            android:layout_gravity="center_horizontal"/>
+
+    </android.support.v7.widget.Toolbar>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvTweets"
         android:layout_marginTop="0dp"
@@ -46,6 +37,18 @@
         android:layout_below="@+id/toolbar">
         </android.support.v7.widget.RecyclerView>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabComposeTweet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:clickable="true"
+        android:src="@drawable/compose"
+        app:layout_behavior="com.codepath.apps.tweeter.helpers.ScrollAwareFABBehavior"
+        app:backgroundTint="@color/twitterColor"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
 

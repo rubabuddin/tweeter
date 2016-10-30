@@ -3,11 +3,14 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:padding="8dp">
+    android:paddingTop="6dp"
+    android:paddingBottom="6dp">
 
     <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="6dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:id="@+id/ivProfile"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -18,30 +21,46 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Kevin Durant"
+        android:id="@+id/tvProfileName"
+        android:textStyle="bold"
+        android:textSize="@dimen/secondaryText"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/ivProfile"
+        android:layout_toEndOf="@+id/ivProfile"
+        android:textColor="@color/colorPrimary" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="1dp"
         android:text="\@kdtrey5"
         android:id="@+id/tvUserName"
         android:layout_marginLeft="4dp"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/tvProfileName"
         android:layout_toEndOf="@+id/tvProfileName"
-        android:textSize="14sp"
+        android:textSize="@dimen/secondaryText"
         android:textColor="@color/colorAccent" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Made my decision to become a Golden State Warrior. Thx for the memories OKC #DubNation"
+        android:paddingRight="8dp"
+        android:text="Made my decision to become a Golden State Warrior. Thx for the memories OKC  www.google.com #DubNation"
         android:id="@+id/tvBody"
+        android:autoLink="web"
         android:layout_below="@+id/tvProfileName"
         android:layout_toRightOf="@+id/ivProfile"
         android:layout_alignRight="@+id/tvTime"
         android:layout_alignEnd="@+id/tvTime"
         android:textColor="@color/colorPrimary"
-        android:textSize="16sp"
-        android:layout_marginBottom="2dp"
-        android:layout_marginTop="1dp"/>
+        android:textSize="@dimen/primaryText"
+        android:layout_marginBottom="3dp"
+        android:textColorLink="@color/twitterColor" />
 
     <TextView
+        android:paddingRight="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="1d"
@@ -49,26 +68,26 @@
         android:layout_alignTop="@+id/tvUserName"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:textSize="14sp"
+        android:textSize="@dimen/secondaryText"
         android:textColor="@color/colorAccent" />
 
     <ImageView
-        android:id="@+id/ivReply"
-        android:layout_width="15dp"
+        android:id="@+id/btnReply"
+        android:layout_width="16dp"
         android:layout_height="15dp"
         android:layout_below="@+id/tvBody"
         android:src="@drawable/twitter_reply"
         android:layout_alignLeft="@id/tvBody"
         android:tint="@color/colorAccent"/>
 
-    <ImageView
-        android:id="@+id/ivRetweet"
+    <ImageButton
+        android:id="@+id/btnRetweet"
         android:layout_width="18dp"
         android:layout_height="18dp"
         android:layout_below="@+id/tvBody"
         android:layout_marginLeft="75dp"
-        android:layout_alignLeft="@id/ivReply"
-        android:src="@drawable/twitter_retweet"
+        android:layout_alignLeft="@id/btnReply"
+        android:background="@drawable/twitter_retweet"
         android:tint="@color/colorAccent"/>
 
     <TextView
@@ -76,19 +95,19 @@
         android:layout_marginLeft="2dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/ivRetweet"
+        android:layout_toRightOf="@+id/btnRetweet"
         tools:text="1,230"
-        android:textSize="14sp"
+        android:textSize="@dimen/secondaryText"
         android:layout_below="@+id/tvBody"
         android:textColor="@color/colorAccent" />
 
-    <ImageView
-        android:id="@+id/ivFavorite"
+    <ImageButton
+        android:id="@+id/btnFavorite"
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:layout_marginLeft="75dp"
         android:layout_alignLeft="@id/tvRetweet"
-        android:src="@drawable/twitter_favorite"
+        android:background="@drawable/twitter_favorite"
         android:layout_below="@+id/tvBody"
         android:tint="@color/colorAccent"/>
 
@@ -97,32 +116,28 @@
         android:layout_marginLeft="2dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/ivFavorite"
+        android:layout_toRightOf="@+id/btnFavorite"
         tools:text="5,056"
-        android:textSize="14sp"
+        android:textSize="@dimen/secondaryText"
         android:layout_below="@+id/tvBody"
         android:textColor="@color/colorAccent" />
 
-    <ImageView
-        android:id="@+id/ivMessage"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
+    <ImageButton
+        android:id="@+id/btnMessage"
+        android:layout_width="@dimen/profile_image_size"
+        android:layout_height="@dimen/profile_image_size"
         android:layout_marginLeft="75dp"
         android:layout_alignLeft="@id/tvFavorite"
-        android:src="@drawable/twitter_message"
+        android:background="@drawable/twitter_message"
         android:layout_below="@+id/tvBody"
         android:tint="@color/colorAccent"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/btnFavorite"
+        android:layout_height="0.25dp"
+        android:background="@android:color/darker_gray"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Kevin Durant"
-        android:id="@+id/tvProfileName"
-        android:textStyle="bold"
-        android:textSize="14sp"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/ivProfile"
-        android:layout_toEndOf="@+id/ivProfile"
-        android:textColor="@color/colorPrimary" />
+
 
 </RelativeLayout>

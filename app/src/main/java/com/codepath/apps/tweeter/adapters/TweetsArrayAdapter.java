@@ -3,6 +3,7 @@ package com.codepath.apps.tweeter.adapters;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +18,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static android.media.CamcorderProfile.get;
-import static com.raizlabs.android.dbflow.config.FlowManager.getContext;
 
 /**
  * Created by rubab.uddin on 10/27/2016.
@@ -57,16 +55,23 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
 
         //find subviews to fill with data in the template
         viewHolder.tvUserName.setText(tweet.getUser().getUserName());
+
         viewHolder.tvBody.setText(tweet.getBody());
         viewHolder.tvBody.setTypeface(tf);
+        viewHolder.tvBody.setMovementMethod(LinkMovementMethod.getInstance());
+
         viewHolder.tvProfileName.setText(tweet.getUser().getProfileName());
         viewHolder.tvProfileName.setTypeface(tf);
+
         viewHolder.tvTime.setText(tweet.getTimeAgo());
         viewHolder.tvTime.setTypeface(tf);
+
         viewHolder.tvRetweet.setText(String.valueOf(tweet.getRetweetCount()));
         viewHolder.tvRetweet.setTypeface(tf);
+
         viewHolder.tvFavorite.setText(String.valueOf(tweet.getFavoriteCount()));
         viewHolder.tvFavorite.setTypeface(tf);
+
         Glide.with(getContext())
                 .load(tweet.getUser().getProfileImageUrl())
                 .placeholder(R.drawable.twitter_user)
