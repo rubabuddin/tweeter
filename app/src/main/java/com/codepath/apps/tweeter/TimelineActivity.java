@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -40,7 +41,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
     @BindView(R.id.fabComposeTweet) FloatingActionButton fabComposeTweet;
     @BindView(R.id.rvTweets) RecyclerView rvTweets;
     @BindView(R.id.toolbar) Toolbar toolbar;
-    //@BindView(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
+    @BindView(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +55,34 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
 
         client = TwitterApplication.getRestClient(); //used for all endpoints across the app
 
+        setupSwipeToRefresh();
         setAuthenticatedUser();
         initializeTimeline();
     }
+
+    private void setupSwipeToRefresh() {
+        // Lookup the swipe container view
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                       initializeTimeline();
+            }
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+    }
+
 
     private void initializeTimeline() {
         rvTweets.setHasFixedSize(true);
         aTweets = new TweetsArrayAdapter(this, tweets);
         rvTweets.setAdapter(aTweets);
+        swipeContainer.setRefreshing(false);
+
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rvTweets.setLayoutManager(linearLayoutManager);
