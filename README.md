@@ -48,8 +48,8 @@ The following **additional** features are implemented:
 
 * [X] Using Butterknife to bind layout items
 * [X] Using Twitter native font (Helvetica Neue)
-* [X} Using [ActiveAndroid ORM](http://www.activeandroid.com/) for managing client side models 
-* [X} Extensive UI work to get identical look and feel of Twitter app (fonts, colours, UI placement)
+* [X] Using [ActiveAndroid ORM](http://www.activeandroid.com/) for managing client side models 
+* [X] Extensive UI work to get identical look and feel of Twitter app (fonts, colours, UI placement)
 * [X] Used custom toolbar with Twitter logo
 * [X] Used EndlessRecyclerViewScrollListener for endless pagination (as limited by API)
 
