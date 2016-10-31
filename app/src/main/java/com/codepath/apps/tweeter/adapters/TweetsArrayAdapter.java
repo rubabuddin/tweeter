@@ -106,7 +106,31 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
             ButterKnife.bind(this, view);
         }
     }
+/*
+    public static class ViewHolderMedia extends RecyclerView.ViewHolder {
+        @BindView(R.id.ivProfile)
+        ImageView ivProfile;
+        @BindView(R.id.tvProfileName)
+        TextView tvProfileName;
+        @BindView(R.id.tvUserName)
+        TextView tvUserName;
+        @BindView(R.id.tvBody)
+        TextView tvBody;
+        @BindView(R.id.tvTime)
+        TextView tvTime;
+        @BindView(R.id.tvRetweet)
+        TextView tvRetweet;
+        @BindView(R.id.tvFavorite)
+        TextView tvFavorite;
+        @BindView(R.id.ivProfile)
+        ImageView ivMedia;
 
+        public ViewHolderMedia(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+    }
+*/
     @Override
     public int getItemCount() {
         if (tweets != null) {

@@ -1,6 +1,7 @@
 package com.codepath.apps.tweeter;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -11,10 +12,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 
 import com.codepath.apps.tweeter.adapters.TweetsArrayAdapter;
 import com.codepath.apps.tweeter.fragments.ComposeTweetDialogFragment;
 import com.codepath.apps.tweeter.helpers.EndlessRecyclerViewScrollListener;
+import com.codepath.apps.tweeter.helpers.ItemClickSupport;
+import com.codepath.apps.tweeter.helpers.SQLHelper;
 import com.codepath.apps.tweeter.helpers.Utils;
 import com.codepath.apps.tweeter.models.Tweet;
 import com.codepath.apps.tweeter.models.User;
@@ -22,6 +26,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +42,8 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
     private TweetsArrayAdapter aTweets;
     private List<Tweet> tweets = new ArrayList<Tweet>();
     private User authenticatedUser;
+    private SQLHelper sqlHelper;
+
 
     @BindView(R.id.fabComposeTweet) FloatingActionButton fabComposeTweet;
     @BindView(R.id.rvTweets) RecyclerView rvTweets;
@@ -54,6 +61,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         client = TwitterApplication.getRestClient(); //used for all endpoints across the app
+        sqlHelper = SQLHelper.getHelper();
 
         setupSwipeToRefresh();
         setAuthenticatedUser();
@@ -83,25 +91,40 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
         rvTweets.setAdapter(aTweets);
         swipeContainer.setRefreshing(false);
 
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rvTweets.setLayoutManager(linearLayoutManager);
-        rvTweets.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayoutManager){
+        rvTweets.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 loadNextDataFromApi(page);
             }
         });
 
-        if(!Utils.isOnline()) {
-                //get offline tweets
+        ItemClickSupport.addTo(rvTweets).setOnItemClickListener(
+                new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                        Tweet tweet = tweets.get(position);
+                        Intent intent = new Intent(TimelineActivity.this, DetailsActivity.class);
+                        intent.putExtra("details", Parcels.wrap(tweet));
+                        startActivity(intent);
+                    }
+                });
+
+        if (!Utils.isOnline()) {
+            //get offline tweets
+            List<Tweet> savedOfflineTweets = sqlHelper.getOfflineTweets();
+            if (savedOfflineTweets != null) {
+                tweets.addAll(savedOfflineTweets);
+                aTweets.notifyItemRangeInserted(0, savedOfflineTweets.size());
+            }
         } else {
             populateTimeline(-1);
         }
     }
 
     @OnClick(R.id.fabComposeTweet)
-    public void composeTweet() {
+    public void composeTweet(){
         FragmentManager fm = getSupportFragmentManager();
         ComposeTweetDialogFragment composeTweetDialogFragment = ComposeTweetDialogFragment.newInstance(authenticatedUser);
         composeTweetDialogFragment.show(fm, "fragment_compose");

@@ -54,10 +54,18 @@
         android:layout_toRightOf="@+id/ivProfile"
         android:layout_alignRight="@+id/tvTime"
         android:layout_alignEnd="@+id/tvTime"
-        android:textColor="@color/colorPrimary"
         android:textColorLink="@color/twitterColor"
+        android:textColor="@color/colorPrimary"
         android:textSize="@dimen/primaryText"
         android:layout_marginBottom="3dp"/>
+
+    <ImageView
+        android:id="@+id/ivMedia"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_alignLeft="@+id/tvBody"
+        android:layout_below="@+id/tvBody"
+        android:layout_marginTop="10dp"/>
 
     <TextView
         android:paddingRight="8dp"
@@ -75,7 +83,7 @@
         android:id="@+id/btnReply"
         android:layout_width="16dp"
         android:layout_height="15dp"
-        android:layout_below="@+id/tvBody"
+        android:layout_below="@+id/ivMedia"
         android:src="@drawable/twitter_reply"
         android:layout_alignLeft="@id/tvBody"
         android:tint="@color/colorAccent"/>
@@ -84,7 +92,7 @@
         android:id="@+id/btnRetweet"
         android:layout_width="18dp"
         android:layout_height="18dp"
-        android:layout_below="@+id/tvBody"
+        android:layout_below="@+id/ivMedia"
         android:layout_marginLeft="75dp"
         android:layout_alignLeft="@id/btnReply"
         android:background="@drawable/twitter_retweet"
@@ -98,7 +106,7 @@
         android:layout_toRightOf="@+id/btnRetweet"
         tools:text="1,230"
         android:textSize="@dimen/secondaryText"
-        android:layout_below="@+id/tvBody"
+        android:layout_below="@+id/ivMedia"
         android:textColor="@color/colorAccent" />
 
     <ImageButton
@@ -108,7 +116,7 @@
         android:layout_marginLeft="75dp"
         android:layout_alignLeft="@id/tvRetweet"
         android:background="@drawable/twitter_favorite"
-        android:layout_below="@+id/tvBody"
+        android:layout_below="@+id/ivMedia"
         android:tint="@color/colorAccent"/>
 
     <TextView
@@ -119,7 +127,7 @@
         android:layout_toRightOf="@+id/btnFavorite"
         tools:text="5,056"
         android:textSize="@dimen/secondaryText"
-        android:layout_below="@+id/tvBody"
+        android:layout_below="@+id/ivMedia"
         android:textColor="@color/colorAccent" />
 
     <ImageButton
@@ -129,7 +137,7 @@
         android:layout_marginLeft="75dp"
         android:layout_alignLeft="@id/tvFavorite"
         android:background="@drawable/twitter_message"
-        android:layout_below="@+id/tvBody"
+        android:layout_below="@+id/ivMedia"
         android:tint="@color/colorAccent"/>
     <View
         android:layout_width="match_parent"

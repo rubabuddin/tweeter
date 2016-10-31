@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_details"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="com.codepath.apps.tweeter.DetailsActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/twitterColor">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:id="@+id/ivToolbar"
+            android:layout_height="37dp"
+            android:adjustViewBounds="true"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/logo_twitter"
+            android:layout_gravity="center_horizontal"/>
+
+    </android.support.v7.widget.Toolbar>
+
+
+    <ImageView
+        android:paddingLeft="8dp"
+        android:paddingRight="6dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/ivProfile"
+        android:layout_below="@id/toolbar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        tools:src="@drawable/ic_launcher"
+        android:layout_marginRight="5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kevin Durant"
+        android:id="@+id/tvProfileName"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_toRightOf="@+id/ivProfile"
+        android:layout_toEndOf="@+id/ivProfile"
+        android:layout_above="@+id/tvUserName"
+        android:textColor="@color/colorPrimary" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="1dp"
+        android:text="\@kdtrey5"
+        android:id="@+id/tvUserName"
+        android:textSize="18sp"
+        android:layout_marginBottom="5dp"
+        android:layout_alignBottom="@id/ivProfile"
+        android:layout_toRightOf="@+id/ivProfile"
+        android:layout_toEndOf="@+id/ivProfile"
+        android:textColor="@color/colorAccent" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Made my decision to become a Golden State Warrior. Thx for the memories OKC  www.google.com #DubNation"
+        android:id="@+id/tvBody"
+        android:autoLink="web"
+        android:layout_below="@+id/ivProfile"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
+        android:padding="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:textColorLink="@color/twitterColor" />
+
+    <TextView
+        android:paddingRight="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1d"
+        android:id="@+id/tvTime"
+        android:layout_alignTop="@+id/tvUserName"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textSize="18sp"
+        android:textColor="@color/colorAccent" />
+
+    <ImageView
+        android:id="@+id/btnReply"
+        android:layout_width="24dp"
+        android:layout_height="22dp"
+        android:src="@drawable/twitter_reply"
+        android:layout_marginLeft="25dp"
+        android:tint="@color/colorAccent"
+        android:layout_marginStart="25dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvBody" />
+
+    <ImageButton
+        android:id="@+id/btnRetweet"
+        android:layout_width="26dp"
+        android:layout_height="28dp"
+        android:layout_toRightOf="@+id/btnReply"
+        android:background="@drawable/twitter_retweet"
+        android:tint="@color/colorAccent"
+        android:layout_marginLeft="60dp"
+        android:layout_marginStart="60dp"
+        android:layout_below="@+id/tvBody" />
+
+    <TextView
+        android:id="@+id/tvRetweet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="1,230"
+        android:textSize="16sp"
+        android:textColor="@color/colorAccent"
+        android:layout_toRightOf="@+id/btnRetweet"
+        android:layout_toEndOf="@+id/btnRetweet"
+        android:layout_alignBottom="@+id/btnRetweet"
+        android:layout_below="@+id/tvBody" />
+
+    <View
+        android:id="@+id/horizontal_line"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/btnFavorite"
+        android:layout_height="0.25dp"
+        android:background="@android:color/darker_gray"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/etReply"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:hint="Reply to this tweet"
+        tools:hint="Reply to this tweet" />
+
+    <ImageButton
+        android:id="@+id/btnMessage"
+        android:layout_width="22dp"
+        android:layout_height="20dp"
+        android:background="@drawable/twitter_message"
+        android:tint="@color/colorAccent"
+        android:layout_alignBottom="@+id/btnReply"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="35dp"
+        android:layout_marginEnd="35dp" />
+
+    <ImageButton
+        android:id="@+id/btnFavorite"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginLeft="160dp"
+        android:background="@drawable/twitter_favorite"
+        android:tint="@color/colorAccent"
+        android:layout_marginStart="160dp"
+        android:layout_alignTop="@+id/btnMessage"
+        android:layout_toRightOf="@+id/btnReply"
+        android:layout_toEndOf="@+id/btnReply" />
+
+    <TextView
+        android:id="@+id/tvFavorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="5,056"
+        android:textSize="16sp"
+        android:textColor="@color/colorAccent"
+        android:layout_alignTop="@+id/btnFavorite"
+        android:layout_toRightOf="@+id/btnFavorite"
+        android:layout_toEndOf="@+id/btnFavorite" />
+
+</RelativeLayout>
