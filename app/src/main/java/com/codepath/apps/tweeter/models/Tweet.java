@@ -2,79 +2,125 @@ package com.codepath.apps.tweeter.models;
 
 import android.text.format.DateUtils;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+import com.activeandroid.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 
 /**
  * Created by rubab.uddin on 10/25/2016.
  */
 //parse JSON, store data, encapsulate state logic or display logic
-public class Tweet {
+@Parcel(analyze = {Tweet.class})
+@Table(name = "Tweets")
+public class Tweet extends Model{
 
-    private String body; //tweet content
-    private long uid; //unique id for the tweet
-    private User user; // store embedded User object
-    private String createdAt;
-    private long retweetCount;
-    private long favoriteCount;
+    @Column(name = "TweetId")
+    public long uid; //unique id for the tweet
 
-    public String getTimeAgo() {
-        String timeAgo = getRelativeTimeAgo(getCreatedAt());
+    @Column(name = "Body")
+    public String body; //tweet content
+
+    @Column(name = "User", onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
+    public User user; // store embedded User object
+
+    @Column(name = "CreatedAt")
+    public String createdAt;
+
+    @Column(name = "Retweeted")
+    public boolean retweeted;
+
+    @Column(name = "RetweetCount")
+    public long retweetCount;
+
+    @Column(name = "Favorited")
+    public boolean favorited;
+
+    @Column(name = "FavoriteCount")
+    public long favoriteCount;
+
+    @Column(name = "EmbeddedMedia", onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
+    public EmbeddedMedia embeddedMedia;
+
+    // empty constructor needed by ActiveAndroid and the Parceler library
+    public Tweet() {
+        super();
+    }
+
+    public void getTimeAgo() {
+        String timeAgo = getRelativeTimeAgo(createdAt);
         String regex = "^(\\d+)\\s(\\S).*";
 
         final Pattern pattern = Pattern.compile(regex);
         final Matcher matcher = pattern.matcher(timeAgo);
 
         while (matcher.find()) {
-            timeAgo = matcher.group(1) + matcher.group(2);
+            createdAt = matcher.group(1) + matcher.group(2);
         }
-        return timeAgo;
     }
-
-    public long getRetweetCount() { return retweetCount; }
-
-    public long getFavoriteCount() { return favoriteCount; }
-
-    public long getUid() {
-        return uid;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public String getBody() {
-        return body;
-    }
-
-    public User getUser(){ return user; }
 
     //Deserialize the JSON and build tweet object
     //Tweet.fromJSON("..") -> <Tweet>
-    public static Tweet fromJSON(JSONObject jsonObject){
-        Tweet tweet = new Tweet();
+    public void fromJSON(JSONObject jsonObject) throws JSONException {
+        //Tweet model
+        uid = jsonObject.getLong("id");
+        body = jsonObject.getString("text");
+        createdAt = jsonObject.getString("created_at");
+        retweeted = jsonObject.getBoolean("retweeted");
+        retweetCount = jsonObject.getLong("retweet_count");
+        favorited = jsonObject.getBoolean("favorited");
+        favoriteCount = jsonObject.getLong("favorite_count");
+        getTimeAgo(); //reformats createdAt time string
 
-        try{
-            tweet.body = jsonObject.getString("text");
-            tweet.uid = jsonObject.getLong("id");
-            tweet.createdAt = jsonObject.getString("created_at");
-            tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
-            tweet.retweetCount = jsonObject.getLong("retweet_count");
-            tweet.favoriteCount = jsonObject.getLong("favorite_count"); //where is the favourites count????
-        } catch (JSONException e) {
-            e.printStackTrace();
+        //User model
+        user = new User();
+        user.fromJSON(jsonObject.getJSONObject("user"));
+
+
+        //EmbeddedMedia model
+        embeddedMedia = new EmbeddedMedia();
+
+        JSONObject entities = jsonObject.getJSONObject("entities");
+        if (entities != null) {
+            try {
+                JSONArray embeddedMediaArray = entities.getJSONArray("media");
+                if (embeddedMediaArray != null) {
+                    List<EmbeddedMedia> embeddedMediaList = new ArrayList<EmbeddedMedia>();
+                    for (int i = 0; i < embeddedMediaArray.length(); i++) {
+                        try {
+                            JSONObject embeddedMediaJson = embeddedMediaArray.getJSONObject(i);
+                            EmbeddedMedia foundMedia = new EmbeddedMedia();
+                            foundMedia.fromJSON(embeddedMediaJson);
+                            if (foundMedia != null)
+                                embeddedMediaList.add(foundMedia);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            continue;
+                        }
+                    }
+                    if (embeddedMediaList != null) {
+                        embeddedMedia = embeddedMediaList.get(0); //get first item
+                    }
+                }
+            } catch (JSONException e) {
+                Log.d("DEBUG", "no media found");
+                embeddedMedia = null;
+            }
         }
-
-        //return tweet object
-        return tweet;
     }
 
     //Tweet.fromJSONArray => List<Tweet>
@@ -83,10 +129,11 @@ public class Tweet {
 
         for(int i=0; i<jsonArray.length(); i++){
             try{
-            JSONObject tweetJson = jsonArray.getJSONObject(i);
-            Tweet tweet = Tweet.fromJSON(tweetJson);
-            if(tweet != null)
-                tweets.add(tweet);
+                JSONObject tweetJson = jsonArray.getJSONObject(i);
+                Tweet tweet = new Tweet();
+                tweet.fromJSON(tweetJson);
+                if(tweet != null)
+                    tweets.add(tweet);
             } catch (JSONException e){
                 e.printStackTrace();
                 continue;

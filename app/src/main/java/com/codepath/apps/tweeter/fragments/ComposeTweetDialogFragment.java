@@ -26,6 +26,7 @@ import com.codepath.apps.tweeter.models.Tweet;
 import com.codepath.apps.tweeter.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcels;
 
@@ -39,7 +40,6 @@ import cz.msebera.android.httpclient.Header;
  */
 
 public class ComposeTweetDialogFragment extends DialogFragment {
-    private static final String TAG = ComposeTweetDialogFragment.class.getSimpleName();
 
     @BindView(R.id.btnTweet)
     Button btnTweet;
@@ -62,14 +62,6 @@ public class ComposeTweetDialogFragment extends DialogFragment {
 
     public interface ComposeTweetDialogListener {
         void onUpdateStatusSuccess(Tweet statusTweet);
-    }
-
-    private void sendSuccess(Tweet newTweet) {
-        ComposeTweetDialogListener listener = (ComposeTweetDialogListener) getActivity();
-        if (listener != null) {
-            listener.onUpdateStatusSuccess(newTweet);
-        }
-        dismiss();
     }
 
     public ComposeTweetDialogFragment() {
@@ -132,17 +124,30 @@ public class ComposeTweetDialogFragment extends DialogFragment {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                Tweet newTweet = Tweet.fromJSON(response);
-                if (response != null) {
+                Tweet newTweet = new Tweet();
+                try{
+                    newTweet.fromJSON(response);
+                } catch (JSONException e){
+                    e.printStackTrace();
+                }
+                if (newTweet != null) {
                     sendSuccess(newTweet);
                 } else {
-                    Log.d(TAG, "Compose tweet failed: " + response.toString());
+                    Log.d("DEBUG", "Compose tweet failed: " + response.toString());
                 }
             }
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
             }
         });
+    }
+
+    private void sendSuccess(Tweet newTweet) {
+        ComposeTweetDialogListener listener = (ComposeTweetDialogListener) getActivity();
+        if (listener != null) {
+            listener.onUpdateStatusSuccess(newTweet);
+        }
+        dismiss();
     }
 
     @Override
@@ -159,9 +164,9 @@ public class ComposeTweetDialogFragment extends DialogFragment {
 
     private void initDialog() {
 
-        btnClose.setColorFilter(R.color.twitterColor); // White Tint
-        tvUser.setText(user.getUserName());
-        Glide.with(getActivity()).load(user.getProfileImageUrl())
+        btnClose.setColorFilter(R.color.twitterColor);
+        tvUser.setText(user.userName);
+        Glide.with(getActivity()).load(user.profileImageUrl)
                 .fitCenter().centerCrop()
                 .into(ivProfilePic);
 

@@ -25,6 +25,9 @@ import butterknife.ButterKnife;
 //Takes tweet object, turns it into a view to be displayed in the list
 public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.ViewHolder>{
 
+    public static final int TWEET = 0;
+    public static final int TWEET_MEDIA = 1;
+
     private List<Tweet> tweets;
     private Context context;
 
@@ -54,26 +57,26 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
         Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/HelveticaNeue-Regular.ttf");
 
         //find subviews to fill with data in the template
-        viewHolder.tvUserName.setText(tweet.getUser().getUserName());
+        viewHolder.tvUserName.setText(tweet.user.userName);
 
-        viewHolder.tvBody.setText(tweet.getBody());
+        viewHolder.tvBody.setText(tweet.body);
         viewHolder.tvBody.setTypeface(tf);
         viewHolder.tvBody.setMovementMethod(LinkMovementMethod.getInstance());
 
-        viewHolder.tvProfileName.setText(tweet.getUser().getProfileName());
+        viewHolder.tvProfileName.setText(tweet.user.profileName);
         viewHolder.tvProfileName.setTypeface(tf);
 
-        viewHolder.tvTime.setText(tweet.getTimeAgo());
+        viewHolder.tvTime.setText(tweet.createdAt);
         viewHolder.tvTime.setTypeface(tf);
 
-        viewHolder.tvRetweet.setText(String.valueOf(tweet.getRetweetCount()));
+        viewHolder.tvRetweet.setText(String.valueOf(tweet.retweetCount));
         viewHolder.tvRetweet.setTypeface(tf);
 
-        viewHolder.tvFavorite.setText(String.valueOf(tweet.getFavoriteCount()));
+        viewHolder.tvFavorite.setText(String.valueOf(tweet.favoriteCount));
         viewHolder.tvFavorite.setTypeface(tf);
 
         Glide.with(getContext())
-                .load(tweet.getUser().getProfileImageUrl())
+                .load(tweet.user.profileImageUrl)
                 .placeholder(R.drawable.twitter_user)
                 .error(R.drawable.twitter_user)
                 .fitCenter()
@@ -110,5 +113,14 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
             return tweets.size();
         }
         return 0;
+    }
+
+    public int getItemViewType(int position) {
+        Tweet tweet = tweets.get(position);
+        if (tweet.embeddedMedia == null) {
+            return TWEET;
+        } else {
+            return TWEET_MEDIA;
+        }
     }
 }

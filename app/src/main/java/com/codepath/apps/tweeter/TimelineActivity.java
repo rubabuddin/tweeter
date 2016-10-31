@@ -113,7 +113,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
         }
 
         //Return tweets that have an id less than the specified id (get older tweets)
-        long maxId = tweets.get(tweets.size() - 1).getUid() - 1;
+        long maxId = tweets.get(tweets.size() - 1).uid - 1;
         populateTimeline(maxId);
     }
 
@@ -144,7 +144,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
     }
 
     public void onUpdateStatusSuccess(Tweet newTweet) {
-        Log.d("DEBUG", "New tweet composed: " + newTweet.getBody());
+        Log.d("DEBUG", "New tweet composed: " + newTweet.body);
         if (newTweet != null) {
             //add to top of timeline
             tweets.add(0, newTweet);
@@ -154,34 +154,31 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
         }
     }
 
-    public void onTweetComposed(String tweetText) {
-        client.postStatus(tweetText, -1, new JsonHttpResponseHandler() {
-            public void onSuccess(JSONObject jsonObject) {
-                tweets.add(Tweet.fromJSON(jsonObject));
-                aTweets.notifyItemInserted(0);
-                //aTweets.notifyDataSetChanged();
-                //scroll to top after tweet post
-                rvTweets.smoothScrollToPosition(0);
-            }
-            public void onFailure(Throwable e, String str) {
-                Log.e("ERROR", e.getMessage());
-            }
-        });
+    private void setAuthenticatedUser() {
+        authenticatedUser = User.getAuthenticatedUser();
+        if (authenticatedUser == null) {
+            getUser();
+        }
     }
 
-    private void setAuthenticatedUser() {
+
+    private void getUser() {
         Log.d("DEBUG", "Fetching user");
         client.getUser(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                authenticatedUser = User.fromJSON(response);
-                if (authenticatedUser == null) {
-                    Log.e("ERROR", "User =NULL ");
+                authenticatedUser = new User();
+                Log.e("ERROR", response.toString());
+                authenticatedUser.fromJSON(response);
+                if (authenticatedUser != null) {
+                    User.saveUser(authenticatedUser);
+                } else {
+                    Log.e("ERROR", "User = NULL ");
                 }
             }
             @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject jsonObject) {
-                Log.d("DEBUG", jsonObject.toString());
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject response) {
+                Log.d("DEBUG", response.toString());
             }
         });
     }
